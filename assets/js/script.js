@@ -3,8 +3,11 @@ var cityNameEl = document.querySelector("#city");
 var currentDayEl = document.querySelector(".current-day-items")
 var currentDayCity = document.querySelector(".current-day");
 var nextDaysEl = document.querySelector("#next-days-items");
+var cityListEl = document.querySelector(".city-list")
 var apiKey = "22d3f6c56f2b5cf1676d0b22d1f6dcfc";
 //"6d750af26a3614ad0451a5f3ef06d42b" //
+
+var citiesList = [];
 
 var today = moment().format ("Do MMMM, YYYY")
 
@@ -61,7 +64,7 @@ var showNextDaysWeather = function(response){
     console.log(response.daily);
     nextDaysEl.innerHTML = response.daily.map(function(day,idx){
         if(idx >= 1 && idx <= 5){
-            return `<div>
+            return `<div class="next-day-container">
                         <h3 class="card-content">${moment(day.dt, 'X').format('Do MMMM, YYYY')}</h3>
                         <img
                             src="http://openweathermap.org/img/wn/${day.weather[0].icon}@4x.png"
@@ -86,6 +89,7 @@ var formSubmitHandler = function(event){
         console.log(city + today)
         
         city = titleCase(city);
+        saveCity(city);
 
         currentDayCity.textContent= city + " (" + today +")";
 
@@ -93,6 +97,12 @@ var formSubmitHandler = function(event){
         //clean value
         cityNameEl.value = "";
     }
+}
+
+var saveCity = function(city){
+    console.log(city)
+    cityListEl.innerHTML = `<button id="btn-city" class="btn col-12 btn my-1 p-0 text-center text-light">
+                            ${city}</button>`
 }
 
 var titleCase = function(str) {

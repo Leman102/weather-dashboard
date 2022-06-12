@@ -14,14 +14,14 @@
           <h1>Weather Dashboard<span class="fa fa-sun"></span> </h1>  
     </header>
     <main class="row flex-row justify-space-between m-1">
-        <div class="search-city col-12 col-md-3 p-0">
+        <div id="search-city-container" class="search-city col-12 col-md-3 p-0">
             <form id="form-container" class="form-container">
                 <h2 class="m-0"><label  for="city">Search for a City:</label></h2>
                 <input name="city" id="city" class="col-12" type="text" autofocus="true" placeholder="City" />
-                <button class="btn col-12 btn my-1 p-0 text-center bg-primary text-light">Search</button>
+                <button id="btn" class="btn col-12 btn my-1 p-0 text-center bg-primary text-light">Search</button>
             </form>
             
-            <div class="group-list m-1">
+            <div class="city-list m-1">
                 list
             </div>
         </div>
@@ -38,8 +38,8 @@
             <div class="card next-days">
                 <h2 class="">5-day Forecast</h2>
 
-                <div id="next-days-items" class="card col-12 no-gutters flex-row justify-content-between w-100">
-                    <div>1
+                <div id="next-days-items" class="card no-gutters flex-row justify-content-between w-100 m-0 p-0">
+                    <div class="next-day-container">1
                         <p class="card-content">Lorem ipsum dolor sit </p>
                         <p class="card-content">Lorem ipsum dolor sit </p>
                         <p class="card-content">Lorem ipsum dolor sit </p>
@@ -51,7 +51,7 @@
                         />
                         
                     </div>
-                    <div>1
+                    <div class="next-day-container">1
                         <p class="card-content">Lorem ipsum dolor sit </p>
                         <p class="card-content">Lorem ipsum dolor sit </p>
                         <p class="card-content">Lorem ipsum dolor sit </p>
@@ -63,7 +63,7 @@
                         />
                         
                     </div>
-                    <div>1
+                    <div class="next-day-container">1
                         <p class="card-content">Lorem ipsum dolor sit </p>
                         <p class="card-content">Lorem ipsum dolor sit </p>
                         <p class="card-content">Lorem ipsum dolor sit </p>
@@ -75,7 +75,7 @@
                         />
                         
                     </div>
-                    <div>1
+                    <div class="next-day-container">1
                         <p class="card-content">Lorem ipsum dolor sit </p>
                         <p class="card-content">Lorem ipsum dolor sit </p>
                         <p class="card-content">Lorem ipsum dolor sit </p>
@@ -87,7 +87,7 @@
                         />
                         
                     </div>
-                    <div>1
+                    <div class="next-day-container">1
                         <p class="card-content">Lorem ipsum dolor sit </p>
                         <p class="card-content">Lorem ipsum dolor sit </p>
                         <p class="card-content">Lorem ipsum dolor sit </p>
