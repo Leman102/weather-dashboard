@@ -4,9 +4,66 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" />
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <title>Weather-Dashboard</title>
 </head>
 <body>
-    
+    <header class="card-header p-0 m-1 text-center text-light align-items-center justify-content-center">
+          <h1>Weather Dashboard<span class="fa fa-sun"></span> </h1>  
+    </header>
+    <main class="row flex-row justify-space-between m-1">
+        <div class="search-city col-4 p-0">
+            <form id="form-container" class="form-container">
+                <h2 class="m-0"><label  for="city">Search for a City:</label></h2>
+                <input name="city" id="city" class="col-12" type="text" autofocus="true" placeholder="City" />
+                <button class="btn col-12 btn my-1 p-0 text-center bg-primary text-light">Search</button>
+            </form>
+            
+            <div class="group-list m-1">
+                list
+            </div>
+        </div>
+        <div class="col-8 pr-0">
+            <div class="card current-day-container">
+                <h2 class="current-day p-1 my-1">
+                    Current city + icon<span id="today-icon"></span>
+                </h2>
+                <div class="current-day-items m-1 d-flex align-content-center align-items-center">
+              
+                </div>
+            </div>
+            
+            <div class="card next-days">
+                <h2 class="">5-day Forecast</h2>
+
+                <div id="next-days-items" class="card col-12 no-gutters flex-row justify-content-between w-100">
+
+                    <!-- <h5 class="card-title p-2">Date</h5>
+                    <img
+                        src="http://openweathermap.org/img/wn/10d@4x.png"
+                        class="card-img-top"
+                        alt="Weather description"
+                    />
+                    <div class="card-body">
+                        <h3 class="card-title">Weather Label</h3>
+                        <p class="card-text">High Temp Low Temp</p>
+                        <p class="card-text">HighFeels like</p>
+                        <p class="card-text">Pressure</p>
+                        <p class="card-text">Humidty</p>
+                        <p class="card-text">UV Index</p>
+                        <p class="card-text">Precipitation</p>
+                        <p class="card-text">Dew Point</p>
+                        <p class="card-text">Wind speed and direction</p>
+                        <p class="card-text">Sunrise</p>
+                        <p class="card-text">Sunset</p>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="/assets/js/script.js"></script>
 </body>
 </html>
