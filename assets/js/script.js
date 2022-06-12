@@ -40,17 +40,16 @@ var getWeather = function (lon , lat){
 //get weather components
 var showCurrentWeather = function(response){
     console.log(response.current);
-    currentDayEl.innerHTML = `<div class="col">
+    currentDayEl.innerHTML = `<div class="col-5">
                 <p>Temp: ${response.current.temp} °C</p>
                 <p>Wind: ${response.current.wind_speed} km/h</p>
                 <p>Humidity: ${response.current.humidity}%</p>
                 <p>UV Index: ${response.current.uvi}</p>
                 </div>
-                <div><img
-                     src="http://openweathermap.org/img/wn/${
-                        response.current.weather[0].icon
-                     }@4x.png"
-                     class="card-img "
+                <div class="col-7  justify-content-start align-items-center">
+                    <img src="http://openweathermap.org/img/wn/${
+                        response.current.weather[0].icon}@4x.png"
+                     height="150px"
                      alt="${response.current.weather[0].description}"
                    />
                 </div> `
@@ -62,31 +61,21 @@ var showNextDaysWeather = function(response){
     console.log(response.daily);
     nextDaysEl.innerHTML = response.daily.map(function(day,idx){
         if(idx >= 1 && idx <= 5){
-            return `<div class="col">
-                    <div class="card">
-                    <h3 class="card-title p-2">${moment(day.dt, 'X').format('Do MMMM, YYYY')}</h3>
-                    </div>
+            return `<div>
+                        <h3 class="card-content">${moment(day.dt, 'X').format('Do MMMM, YYYY')}</h3>
+                        <img
+                            src="http://openweathermap.org/img/wn/${day.weather[0].icon}@4x.png"
+                            height="50px"                        
+                            alt="${day.weather[0].description}"
+                        /> 
+                        <p class="card-content">Temp: ${day.temp.day} °C</p>
+                        <p class="card-content">Wind: ${day.wind_speed} km/h</p>
+                        <p class="card-content">Humidity: ${day.humidity}%</p>
+                        <p class="card-content">UV Index: ${day.uvi}</p>
                     </div>`
         }
     }).join(" ");
-};
-        
-        // nextDaysEl.innerHTML = `<div class="col-6">
-        //         <p>Temp: ${response.daily.temp[i]} °C</p>
-        //         <p>Wind: ${response.daily.wind_speed[i]} km/h</p>
-        //         <p>Humidity: ${response.daily.humidity[i]}%</p>
-        //         <p>UV Index: ${response.daily.uvi[i]}</p>
-        //         </div>
-        //         <div><img
-        //              src="http://openweathermap.org/img/wn/${
-        //                 response.daily.weather[i].icon
-        //              }@4x.png"
-        //              class="card-img "
-        //              alt="${response.daily.weather[[i]].description}"
-        //            />
-        //         </div> `
-    
-
+};  
 
 var formSubmitHandler = function(event){
     event.preventDefault();
@@ -95,7 +84,7 @@ var formSubmitHandler = function(event){
         alert("Enter valid city")
     } else{
         console.log(city + today)
-
+        
         city = titleCase(city);
 
         currentDayCity.textContent= city + " (" + today +")";
