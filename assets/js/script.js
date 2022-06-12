@@ -43,11 +43,20 @@ var getWeather = function (lon , lat){
 //get weather components
 var showCurrentWeather = function(response){
     console.log(response.current);
+    var uvLevel = ''
+    if(response.current.uvi < 2.1){
+        uvLevel='<span id="uv-favorable" class="px-2">'
+    }
+    else if(response.current.uvi < 6){
+        uvLevel='<span id="uv-moderate" class="px-2">';
+    }else{
+        uvLevel='<span id="uv-severe" class="px-2">';
+    }
     currentDayEl.innerHTML = `<div class="col-5">
                 <p>Temp: ${response.current.temp} °C</p>
                 <p>Wind: ${response.current.wind_speed} km/h</p>
                 <p>Humidity: ${response.current.humidity}%</p>
-                <p>UV Index: ${response.current.uvi}</p>
+                <p>UV Index: `+ uvLevel +`${response.current.uvi}  </span></p>
                 </div>
                 <div class="col-7  justify-content-start align-items-center">
                     <img src="http://openweathermap.org/img/wn/${
@@ -64,8 +73,17 @@ var showNextDaysWeather = function(response){
     console.log(response.daily);
     nextDaysEl.innerHTML = response.daily.map(function(day,idx){
         if(idx >= 1 && idx <= 5){
+            var uvLevel = '';
+            if(day.uvi < 2.1){
+                uvLevel='<span id="uv-favorable" class="px-2">'
+            }
+            else if(day.uvi < 6){
+                uvLevel='<span id="uv-moderate" class="px-2">';
+            }else{
+                uvLevel='<span id="uv-severe" class="px-2">';
+            }
             return `<div class="next-day-container">
-                        <h3 class="card-content">${moment(day.dt, 'X').format('Do MMMM, YYYY')}</h3>
+                        <h3 class="card-content">${moment(day.dt, 'X').format('DD/MM/YYYY')}</h3>
                         <img
                             src="http://openweathermap.org/img/wn/${day.weather[0].icon}@4x.png"
                             height="50px"                        
@@ -74,7 +92,7 @@ var showNextDaysWeather = function(response){
                         <p class="card-content">Temp: ${day.temp.day} °C</p>
                         <p class="card-content">Wind: ${day.wind_speed} km/h</p>
                         <p class="card-content">Humidity: ${day.humidity}%</p>
-                        <p class="card-content">UV Index: ${day.uvi}</p>
+                        <p class="card-content">UV Index: `+ uvLevel +`${day.uvi}  </span></p>
                     </div>`
         }
     }).join(" ");

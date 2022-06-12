@@ -59,3 +59,21 @@ h3 {
 #btn-city{
     background-color: rgb(86, 86, 105);
 }
+
+#uv-favorable{
+    background-color: green;
+    border-radius: 5px;
+    color: white;
+}
+
+#uv-moderate{
+    background-color: orange;
+    border-radius: 5px;
+    color: white;
+}
+
+#uv-severe{
+    background-color: red;
+    border-radius: 5px;
+    color: white;
+}
