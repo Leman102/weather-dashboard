@@ -4,9 +4,11 @@ body {
     line-height: 1;
 }
 
-.card-header{
+header{
     text-align: center;
-    background-color: rgb(74, 74, 172);
+    background-image: linear-gradient(to right, skyblue , rgb(67, 67, 239));
+    color: white;
+    text-shadow: 2px 2px 0px navy;
 }
 h1 {
     font-size: 3vh;

@@ -5,9 +5,12 @@ var currentDayCity = document.querySelector(".current-day");
 var nextDaysEl = document.querySelector("#next-days-items");
 var cityListEl = document.querySelector(".city-list")
 var apiKey = "22d3f6c56f2b5cf1676d0b22d1f6dcfc";
+var mostRecentCity = localStorage.getItem("mostRecentCity");
 //"6d750af26a3614ad0451a5f3ef06d42b" //
 
-var citiesList = [];
+
+
+console.log(mostRecentCity);
 
 var today = moment().format ("Do MMMM, YYYY")
 
@@ -15,6 +18,7 @@ console.log(moment(1655053200, 'X').format('lll'))
 
 //get city lat and lon
 var getCity = function (city){
+    
     //weather includes city + API key
     var cityApi = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + apiKey + "&units=metric";
     console.log(cityApi)
@@ -24,6 +28,14 @@ var getCity = function (city){
         });
         console.log(response);
     })
+}
+
+//Update the weather with the last search if any
+if(mostRecentCity){
+    cityListEl.innerHTML = `<button id="btn-city" class="btn col-12 btn my-1 p-0 text-center text-light">
+                            ${mostRecentCity}</button>`;
+    getCity(mostRecentCity);
+    currentDayCity.textContent = mostRecentCity + " (" + today +")";
 }
 
 //get the API for weather components
@@ -119,6 +131,14 @@ var formSubmitHandler = function(event){
 
 var saveCity = function(city){
     console.log(city)
+    localStorage.setItem('mostRecentCity',city);
+    // var highScores = JSON.parse(localStorage.getItem('city')) || [];
+
+    // highScoresList.innerHTML = 
+    // highScores.map(score=>{
+    //     return`<li class="high-score">${score.name} => ${score.score}</li>`
+    // }).join('');
+
     cityListEl.innerHTML = `<button id="btn-city" class="btn col-12 btn my-1 p-0 text-center text-light">
                             ${city}</button>`
 }
