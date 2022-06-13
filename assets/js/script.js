@@ -3,18 +3,17 @@ var cityNameEl = document.querySelector("#city");
 var currentDayEl = document.querySelector(".current-day-items")
 var currentDayCity = document.querySelector(".current-day");
 var nextDaysEl = document.querySelector("#next-days-items");
-var cityListEl = document.querySelector(".city-list")
+var cityListEl = document.querySelector(".list-group")
 var apiKey = "22d3f6c56f2b5cf1676d0b22d1f6dcfc";
 var mostRecentCity = localStorage.getItem("mostRecentCity");
+var listCitiesEl = document.querySelector(".city-list-containe")
 //"6d750af26a3614ad0451a5f3ef06d42b" //
+var cityVal = "";
 
+var searchCity = [];
 
+var today = moment().format ("Do MMMM, YYYY");
 
-console.log(mostRecentCity);
-
-var today = moment().format ("Do MMMM, YYYY")
-
-console.log(moment(1655053200, 'X').format('lll'))
 
 //get city lat and lon
 var getCity = function (city){
@@ -30,14 +29,6 @@ var getCity = function (city){
     })
 }
 
-//Update the weather with the last search if any
-if(mostRecentCity){
-    cityListEl.innerHTML = `<button id="btn-city" class="btn col-12 btn my-1 p-0 text-center text-light">
-                            ${mostRecentCity}</button>`;
-    getCity(mostRecentCity);
-    currentDayCity.textContent = mostRecentCity + " (" + today +")";
-}
-
 //get the API for weather components
 var getWeather = function (lon , lat){
     var weatherApi =  `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
@@ -47,7 +38,7 @@ var getWeather = function (lon , lat){
                 console.log(data)
                 showCurrentWeather(data);
                 showNextDaysWeather(data);
-            });    
+            });
         }
     });
 }
@@ -65,7 +56,7 @@ var showCurrentWeather = function(response){
         uvLevel='<span id="uv-severe" class="px-2">';
     }
     currentDayEl.innerHTML = `<div class="col-5">
-                <p>Temp: ${response.current.temp} °C</p>
+                <p>Temp: <b> ${response.current.temp} °C</b></p>
                 <p>Wind: ${response.current.wind_speed} km/h</p>
                 <p>Humidity: ${response.current.humidity}%</p>
                 <p>UV Index: `+ uvLevel +`${response.current.uvi}  </span></p>
@@ -76,7 +67,7 @@ var showCurrentWeather = function(response){
                      height="150px"
                      alt="${response.current.weather[0].description}"
                    />
-                </div> `
+                </div>`;
 }
 
 
@@ -94,14 +85,14 @@ var showNextDaysWeather = function(response){
             }else{
                 uvLevel='<span id="uv-severe" class="px-2">';
             }
-            return `<div class="next-day-container">
+            return `<div class="next-day-container col-12 p-1 col-sm-2">
                         <h3 class="card-content">${moment(day.dt, 'X').format('DD/MM/YYYY')}</h3>
                         <img
                             src="http://openweathermap.org/img/wn/${day.weather[0].icon}@4x.png"
                             height="50px"                        
                             alt="${day.weather[0].description}"
                         /> 
-                        <p class="card-content">Temp: ${day.temp.day} °C</p>
+                        <p class="card-content">Temp:<b> ${day.temp.day} °C</b></p>
                         <p class="card-content">Wind: ${day.wind_speed} km/h</p>
                         <p class="card-content">Humidity: ${day.humidity}%</p>
                         <p class="card-content">UV Index: `+ uvLevel +`${day.uvi}  </span></p>
@@ -118,31 +109,112 @@ var formSubmitHandler = function(event){
     } else{
         console.log(city + today)
         
+        //Adjust the input to display first letter of each world in caps 
         city = titleCase(city);
+        
+        //Save city in localStorage
         saveCity(city);
 
-        currentDayCity.textContent= city + " (" + today +")";
-
+        //Define header of current day
+        currentDayCity.textContent = city + " (" + today +")";
         getCity(city);
+
         //clean value
         cityNameEl.value = "";
     }
 }
 
-var saveCity = function(city){
-    console.log(city)
-    localStorage.setItem('mostRecentCity',city);
-    // var highScores = JSON.parse(localStorage.getItem('city')) || [];
+var saveCity = function(cityVal){
+    // debugger
+    // console.log(cityVal)
 
-    // highScoresList.innerHTML = 
-    // highScores.map(score=>{
-    //     return`<li class="high-score">${score.name} => ${score.score}</li>`
-    // }).join('');
+    //if empty value reject input
+    if(!cityVal){
+        return
+    }
+   
+    //extract object from local storage
+    var searchCity = JSON.parse(localStorage.getItem("cityNames"));
 
-    cityListEl.innerHTML = `<button id="btn-city" class="btn col-12 btn my-1 p-0 text-center text-light">
-                            ${city}</button>`
+    //define most recent city
+    localStorage.setItem('mostRecentCity',cityVal);
+
+    //if no objects send 1st city
+    if (searchCity === null){
+        searchCity = [];
+        searchCity.push(cityVal);
+        localStorage.setItem("cityNames",JSON.stringify(searchCity));
+        // createCity(cityVal);
+        createCityList(cityVal);
+        location.reload();
+    }
+    else {
+        if(findCity(cityVal) > 0){
+            
+            searchCity.push(cityVal);
+            localStorage.setItem("cityNames", JSON.stringify(searchCity));
+            // createCity(cityVal);
+            createCityList(cityVal);
+            location.reload();
+        }          
+    }        
+};
+
+//avoid duplicates from localstorage
+var findCity = function (c){
+    var searchCity = JSON.parse(localStorage.getItem("cityNames"))
+    for (var i=0; i < searchCity.length; i++){
+        if(c === searchCity[i]){
+            return -1;
+        }
+    }
+    return 1;
 }
 
+// var createCity = function(reference){
+//     cityListEl.innerHTML = `<button id="btn-city" class="btn col-12 btn my-1 p-0 text-center text-light" data-id=${reference}>
+//                             ${reference}</button>`
+// }
+
+
+function createCityList(element){
+
+    
+
+    if(element = "" || element){
+        return element = searchCity;
+    }
+    var searchCity = JSON.parse(localStorage.getItem("cityNames"));
+    console.log(searchCity)
+    if(searchCity !== null){
+        for(var i = 0; i < searchCity.length;i++){
+            console.log(searchCity[i])
+            cityListEl.innerHTML += `<button id="btn-city" class="btn col-12 btn my-1 p-0 text-center text-light" data-id=${[i]}>
+                            ${searchCity[i]}</button>`
+        }
+    }
+    if(!mostRecentCity){   
+        return;        
+    }
+    currentDayCity.textContent = mostRecentCity + " (" + today +")";
+    console.log(mostRecentCity + "here");
+   
+    getCity(mostRecentCity);
+}
+
+var cityBtn = function(event){ 
+    event.preventDefault();
+
+    var optionBtn = event.target;
+    
+    console.log(optionBtn.textContent.trim())
+
+    currentDayCity.textContent = optionBtn.textContent.trim() + " (" + today +")";
+    
+    getCity(optionBtn.textContent.trim())
+};
+
+//1st letter in Upper case
 var titleCase = function(str) {
     //split the words within the string
     var array = str.toLowerCase().split(" ");
@@ -152,5 +224,10 @@ var titleCase = function(str) {
     return result.join(" ");
 };
 
+cityListEl.addEventListener("click", cityBtn)
 formContainer.addEventListener("submit", formSubmitHandler)
+
+saveCity();
+createCityList();
+
 
