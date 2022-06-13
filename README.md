@@ -9,4 +9,5 @@ Use this app to check the weather!
 4. 1 Readme.MD
 
 ## App link [here](https://leman102.github.io/weather-dashboard/)
-## image
+## Image
+<img width="1795" alt="Screen Shot 2022-06-13 at 6 37 01 PM" src="https://user-images.githubusercontent.com/64149102/173462370-c4b2b4cb-13b9-40e4-a5c1-db71c2868c05.png">
