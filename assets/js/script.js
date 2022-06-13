@@ -31,7 +31,7 @@ var getCity = function (city){
 
 //get the API for weather components
 var getWeather = function (lon , lat){
-    var weatherApi =  `http://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+    var weatherApi =  `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
     fetch(weatherApi).then(function(response){
         if(response.ok){
             response.json().then(function(data){
@@ -127,12 +127,10 @@ var formSubmitHandler = function(event){
 var saveCity = function(cityVal){
     // debugger
     // console.log(cityVal)
-
     //if empty value reject input
     if(!cityVal){
         return
     }
-   
     //extract object from local storage
     var searchCity = JSON.parse(localStorage.getItem("cityNames"));
 
@@ -146,6 +144,7 @@ var saveCity = function(cityVal){
         localStorage.setItem("cityNames",JSON.stringify(searchCity));
         // createCity(cityVal);
         createCityList(cityVal);
+        //reload the page to update the list of cities in real time
         location.reload();
     }
     else {
@@ -155,6 +154,7 @@ var saveCity = function(cityVal){
             localStorage.setItem("cityNames", JSON.stringify(searchCity));
             // createCity(cityVal);
             createCityList(cityVal);
+            //reload the page to update the list of cities in real time
             location.reload();
         }          
     }        
@@ -170,17 +170,9 @@ var findCity = function (c){
     }
     return 1;
 }
-
-// var createCity = function(reference){
-//     cityListEl.innerHTML = `<button id="btn-city" class="btn col-12 btn my-1 p-0 text-center text-light" data-id=${reference}>
-//                             ${reference}</button>`
-// }
-
-
+//create list of cites saved in localStorage
 function createCityList(element){
-
     
-
     if(element = "" || element){
         return element = searchCity;
     }
@@ -198,10 +190,11 @@ function createCityList(element){
     }
     currentDayCity.textContent = mostRecentCity + " (" + today +")";
     console.log(mostRecentCity + "here");
-   
+    //if the page refreshes the weather from the last city is reflected
     getCity(mostRecentCity);
 }
 
+//if click on one of the cities from the list display the weather 
 var cityBtn = function(event){ 
     event.preventDefault();
 
